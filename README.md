@@ -8,28 +8,28 @@ Summary of interview experience
 
 - EventLoop 看代码
 
-> ```javaScript
-> async function async1() {
-> console.log('async1 start');
-> await async2();
-> console.log('async1 end');
-> }
-> async function async2() {
-> console.log('async2');
-> }
-> console.log('script start');
-> setTimeout(function () {
-> console.log('setTimeout');
-> }, 0);
-> async1();
-> new Promise(function (resolve) {
-> console.log('promise1');
-> resolve();
-> }).then(function () {
-> console.log('promise2');
-> });
-> console.log('script end');
-> ```
+  > ```javaScript
+  > async function async1() {
+  > console.log('async1 start');
+  > await async2();
+  > console.log('async1 end');
+  > }
+  > async function async2() {
+  > console.log('async2');
+  > }
+  > console.log('script start');
+  > setTimeout(function () {
+  > console.log('setTimeout');
+  > }, 0);
+  > async1();
+  > new Promise(function (resolve) {
+  > console.log('promise1');
+  > resolve();
+  > }).then(function () {
+  > console.log('promise2');
+  > });
+  > console.log('script end');
+  > ```
 
 - 宏任务与微任务
 - 闭包概念，应用（防抖节流）
@@ -53,20 +53,20 @@ Summary of interview experience
 - js 继承如何实现
 - 请说出以下代码打印的结果
 
-> ```javascript
-> if ([] == false) {
->   console.log(1)
-> }
-> if ({} == false) {
->   console.log(2)
-> }
-> if ([]) {
->   console.log(3)
-> }
-> if ([1] == [1]) {
->   console.log(4)
-> }
-> ```
+  > ```javascript
+  > if ([] == false) {
+  >   console.log(1)
+  > }
+  > if ({} == false) {
+  >   console.log(2)
+  > }
+  > if ([]) {
+  >   console.log(3)
+  > }
+  > if ([1] == [1]) {
+  >   console.log(4)
+  > }
+  > ```
 
 - 代码运行结果
 
@@ -102,70 +102,70 @@ Summary of interview experience
 
 ### CSS
 
-css 选择器优先级
-三栏布局
-用 css 画一个扇形
-CSS 实现骰子 3 的那面
-多行超出显示省略号
-rem 和 em 原理
-BFC 以及触发方式，怎么解决自适应问题的
-垂直居中
-样式重叠怎么解决
+- css 选择器优先级
+- 三栏布局
+- 用 css 画一个扇形
+- CSS 实现骰子 3 的那面
+- 多行超出显示省略号
+- rem 和 em 原理
+- BFC 以及触发方式，怎么解决自适应问题的
+- 垂直居中
+- 样式重叠怎么解决
 
 ### Net
 
-OSI 五层（七层）协议
-HTTP 头设置什么可以获取用户 IP
-HTTP 状态码
-CSRF
-XSS
-TCP 和 UDP 区别
-HTTP 请求的幂等概念的理解以及常见请求的幂等性
-option 预请求
-跨域的同时携带 cookie
+- OSI 五层（七层）协议
+- HTTP 头设置什么可以获取用户 IP
+- HTTP 状态码
+- CSRF
+- XSS
+- TCP 和 UDP 区别
+- HTTP 请求的幂等概念的理解以及常见请求的幂等性
+- option 预请求
+- 跨域的同时携带 cookie
 
 ### CODE
 
-数据扁平化
-手写 bind
-最长上升子序列长度
-最大连续子数组
-顺时针打印二维矩阵
-判断二叉树从父节点到字节点是否有一条和为 sum 的路径
-实现一个{{}}语法
-实现发布订阅模式，具有以下公开方法
+- 数据扁平化
+- 手写 bind
+- 最长上升子序列长度
+- 最大连续子数组
+- 顺时针打印二维矩阵
+- 判断二叉树从父节点到字节点是否有一条和为 sum 的路径
+- 实现一个{{}}语法
+- 实现发布订阅模式，具有以下公开方法
 
-```javascript
-class EventEmit {
-  constructor(elem, props) {
-    // your code
+  ```javascript
+  class EventEmit {
+    constructor(elem, props) {
+      // your code
+    }
+    // 注册事件的回调函数
+    on(event, callback) {
+      // your code
+    }
+    // 注册事件的回调函数，只执行一次
+    once(event, callback) {
+      // your code
+    }
+    // 触发注册的事件回调函数执行
+    emit(event, ...args) {
+      // your code
+    }
+    // 删除一个回调函数
+    remove(event, callback) {
+      // your code
+    }
   }
-  // 注册事件的回调函数
-  on(event, callback) {
-    // your code
-  }
-  // 注册事件的回调函数，只执行一次
-  once(event, callback) {
-    // your code
-  }
-  // 触发注册的事件回调函数执行
-  emit(event, ...args) {
-    // your code
-  }
-  // 删除一个回调函数
-  remove(event, callback) {
-    // your code
-  }
-}
-```
+  ```
 
-实现一个 sleep 函数  
-判断两个单词是否异位词  
-实现一个 promise.race  
-和至少为 K 的最短子数组  
-jsonp  
-深拷贝
+- 实现一个 sleep 函数
+- 判断两个单词是否异位词
+- 实现一个 promise.race
+- 和至少为 K 的最短子数组
+- jsonp
+- 深拷贝
 
 ### 智力
 
-老虎吃羊问题
+- 老虎吃羊问题
