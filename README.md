@@ -150,44 +150,19 @@ Summary of interview experience
 
 ### CODE
 
+- [最长上升子序列长度](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
+- [最大连续子数组](https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/)
+- [顺时针打印矩阵](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)
+- [二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
+- [求二叉树的公共祖先节点](https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+- [和至少为 K 的最短子数组](https://leetcode-cn.com/problems/shortest-subarray-with-sum-at-least-k/)
+- [字符串的排列](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/)
 - 数据扁平化
 - 手写 bind
-- 最长上升子序列长度
-- 最大连续子数组
-- 顺时针打印二维矩阵
-- 判断二叉树从父节点到字节点是否有一条和为 sum 的路径
 - 实现一个{{}}语法
-- 实现发布订阅模式，具有以下公开方法
-
-  ```javascript
-  class EventEmit {
-    constructor(elem, props) {
-      // your code
-    }
-    // 注册事件的回调函数
-    on(event, callback) {
-      // your code
-    }
-    // 注册事件的回调函数，只执行一次
-    once(event, callback) {
-      // your code
-    }
-    // 触发注册的事件回调函数执行
-    emit(event, ...args) {
-      // your code
-    }
-    // 删除一个回调函数
-    remove(event, callback) {
-      // your code
-    }
-  }
-  ```
-
 - 实现一个 sleep 函数
 - 判断两个单词是否异位词
 - 实现一个 promise.race
-- 和至少为 K 的最短子数组
-- 字符串所有排列的可能
 - 多行字符串转二维数组
 - 页面所有节点数
 - jsonp
@@ -195,7 +170,6 @@ Summary of interview experience
 - 防抖节流
 - 判断堆栈的出栈顺序是否合理
 - 倒计时 截止时间 2020 年 11 月 11 日 0 点显示“剩余 XX 天 XX 时 XX 分 XX 秒”每秒刷新一次
-- 求二叉树的公共祖先节点
 - 字符串转千分位
 - 实现深搜索，例如对于这样一个数组 city 和指定的 code，输出对应的 name：
 
@@ -252,6 +226,32 @@ Summary of interview experience
   var object = { a: [{ b: { c: 3 } }] }
   get(object, 'a[0].b.c')
   //应该返回 3
+  ```
+
+- 实现发布订阅模式，具有以下公开方法
+
+  ```javascript
+  class EventEmit {
+    constructor(elem, props) {
+      // your code
+    }
+    // 注册事件的回调函数
+    on(event, callback) {
+      // your code
+    }
+    // 注册事件的回调函数，只执行一次
+    once(event, callback) {
+      // your code
+    }
+    // 触发注册的事件回调函数执行
+    emit(event, ...args) {
+      // your code
+    }
+    // 删除一个回调函数
+    remove(event, callback) {
+      // your code
+    }
+  }
   ```
 
 ### 智力
