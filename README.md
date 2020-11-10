@@ -48,6 +48,7 @@ Summary of interview experience
 - apply，call 和 bind 区别
 - echar 使用的是 svg 还是 cavas
 - 正则中的 i 具体做了什么事
+  > 把搜索修改为大小写不敏感
 - instanceof typeof 以及 toString
 - arguments 是数组吗？若不是，如何将它转化为真正的数组
 - js 继承如何实现
