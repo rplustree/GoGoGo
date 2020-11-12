@@ -77,20 +77,20 @@ Summary of interview experience
 
 - 请说出以下代码打印的结果
 
-```javascript
-if ([] == false) {
-  console.log(1)
-}
-if ({} == false) {
-  console.log(2)
-}
-if ([]) {
-  console.log(3)
-}
-if ([1] == [1]) {
-  console.log(4)
-}
-```
+  ```javascript
+  if ([] == false) {
+    console.log(1)
+  }
+  if ({} == false) {
+    console.log(2)
+  }
+  if ([]) {
+    console.log(3)
+  }
+  if ([1] == [1]) {
+    console.log(4)
+  }
+  ```
 
 - 代码运行结果
 
@@ -236,9 +236,8 @@ if ([1] == [1]) {
 - 输出 1-10000 所有回文数
 - 手写 bind
 - 实现一个{{}}语法
-- 实现一个 sleep 函数
 - 实现一个 promise.race
-- 使用 Promise 实现 sleep(1000).then(()=>{console.log(2)}),先打印 1 过一秒打印 2
+- 使用 Promise 实现 sleep(1000).then(()=>{console.log(2)})，先打印 1 过一秒打印 2
 - 多行字符串转二维数组
 - 页面所有节点数
 - jsonp
@@ -365,7 +364,7 @@ if ([1] == [1]) {
 - 大文件上传 分片（Blob 对象） 流式处理（Stream）
 - 如何统计用户的浏览时长，要考虑到用户会切换页面，缩放页面等。多个点进行上报时，如何区分这些数据来自于同一个会话？
   > [https://yq.aliyun.com/articles/635301](https://yq.aliyun.com/articles/635301)
-  - 统计 uv 与 pv
+- 统计 uv 与 pv
 - 设计通用输入搜索组件
 - 实现一个快照类并优化
 - 文件上传
