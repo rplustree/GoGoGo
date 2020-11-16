@@ -8,25 +8,28 @@ Summary of interview experience
 
 - 宏任务与微任务
 - 闭包概念，应用（防抖节流）
-- 每隔一秒输出数组一项
 - async/await 和 Promise 实现，await 返回什么
 - 输入 url 到返回内容发生了什么
-- webpack 了解么
 - 跨域方式，图片跨域，cookie 跨域
 - token
 - 怎么给数据结构添加迭代器
 - BOM 和 DOM 的区别
 - 线程和进程
-- 多页面之间的通信
 - cookie 和 localstorge 的区别
 - apply，call 和 bind 区别，MDN 文档提供的 bind 函数 polyfill 实现细节
-- echar 使用的是 svg 还是 cavas
+- echar 使用的是 svg 还是 canvas
+  > canvas
 - 正则中的 i 具体做了什么事
   > 把搜索修改为大小写不敏感
 - instanceof typeof 以及 toString
 - arguments 是数组吗？若不是，如何将它转化为真正的数组
+
+  > 是类数组（有 length 属性）
+  >
+  > - Array.prototype.slice.call(arrLike)
+  > - Array.from(arrLike)
+
 - 立即执行函数，是否是一种闭包
-- 伪调用
 - js 继承如何实现
 - 原型链
 - ES6 寄生组合式
@@ -36,23 +39,62 @@ Summary of interview experience
 - MDN 的 bind 函数 polyfill 怎么实现的
 - map、{}、weakmap 区别
 - [] == ![] ，[] == []
+  > true, false。[] == []比较的是地址，不是同一个对象所以是 false。逻辑非的优先级高于相等操作符，所以先![]是 false
 - new 操作符原理
 - CommonJS 与 ES Module 差异
+
+  > - CommonJS 输出的是一个值的拷贝，ES6 模块输出的是值的引用
+  > - 前者是运行时加载，后者编译时输出接口
+  > - 未完待续
+
 - 事件模型
 - 两个同域的页面之间的通信
+
+  > - 监听 localstorage 的 onstorge 事件（只有非当前页面修改 localstorge 才会触发）
+  > - postmessage
+  > - iframe
+  >   - window.location.hash
+  >   - window.name
+  >   - 互相调用 js
+
 - encodeURI 和 encodeURIComponent 区别
+  > encodeURIComponent 比 encodeURI 编码的范围更大。编码整个 url 用后者，部分 url 用前者
 - 暂时性死区的定义
+  > 只要块级作用域内存在 let 命令，它所声明的变量就绑定这个区域，不再受外部的影响，在代码块内，使用 let 命令声明变量之前，该变量都是不可用的。这在语法上，称为“暂时性死区”（temporal dead zone，简称 TDZ）
 - 如何判断一个对象为空（如何判断 symbol 对象为空）
 - 事件代理
-- 装箱拆箱，隐式转换
+- 装箱拆箱，隐式转换原则
 - V8 与 Libuv 事件循环的差异
-- 尾递归
+- 尾调用，尾递归，尾调用优化
+  > 当函数执行的最后一步是返回另一个函数的调用就叫尾调用，当尾调用自身就是尾递归。不需要外层函数调用记录时，在最后 return 另一个函数，只保留内层函数的调用记录即为尾调用优化。
 - typeof instanceof
 - ajax 实现原理，以及和 fetch 的区别
+  > ajax 核心是 XMLHttpRequest 对象，存在回调地狱
+  > fetch 是 XMLHttpRequest 的替代方案，脱离了 XHR，提供了丰富的 API,更加底层化，语法更简单，基于 promise 实现
 - requestAnimationFrame 和 setInterVal 区别？用 rAF 实现
 - 判断数组的方法
-- map 有几个参数
-- JS 加载阻塞 DOM 渲染问题，怎么解决
+
+  > - array instanceof Array
+  > - array.constructor === Array
+  > - array.**proto**.constructor === Array
+  > - Array.isArray(array)
+  >
+  > - ```javascript
+  >   if (!Array.isArray) {
+  >     Array.isArray = function (arg) {
+  >       return Object.prototype.toString.call(arg) === '[object Array]'
+  >     }
+  >   }
+  >   ```
+
+- map 函数有几个参数
+  > callback(currentValue\*,index,array),this
+  > 返回由原数组每个元素执行回调函数的结果组成的新数组，不会对空数组检测
+- JS 加载阻塞 DOM 渲染问题怎么解决
+  > 放在代码最后延迟加载
+  > defer 延迟，在文档解析完成开始执行
+  > async 异步加载
+  > 动态创建 DOM
 - 请说出以下代码打印的结果
 
   ```javascript
@@ -157,6 +199,7 @@ Summary of interview experience
 - HTML5 特性
 - script 标签中 async 和 defer 的区别
 - src 和 href 区别
+  > src 引入并替换当前标签，href 在当前文档和资源之间确立联系
 - 块元素、行内元素有哪些？区别
 
 ### CSS
@@ -188,6 +231,7 @@ Summary of interview experience
 ### Net
 
 - OSI 五层（七层）协议
+  > 物理层，数据链路层，通信层，传输层，（会话层，状态层），应用层
 - get 和 post 区别
 - HTTP 头设置什么可以获取用户 IP
 - http 协议报文结构
@@ -199,7 +243,7 @@ Summary of interview experience
 - HTTP 请求的幂等概念的理解以及常见请求的幂等性
 - option 预请求
 - 跨域的同时携带 cookie
-- 知道 referer 头部吗，直接请求服务器时 refer 是多少，在 CSRF 中的作用
+- 知道 refer 头部吗，直接请求服务器时 refer 是多少，在 CSRF 中的作用
 - HTTP 和 Websocket 的联系
 - 请求头常见字段
 - catheControl 的值，服务端拿什么与客户端进行通信
@@ -239,6 +283,7 @@ Summary of interview experience
 - 实现一个 promise.race
 - 使用 Promise 实现 sleep(1000).then(()=>{console.log(2)})，先打印 1 过一秒打印 2
 - 多行字符串转二维数组
+- 每隔一秒输出数组一项
 - 页面所有节点数
 - jsonp
 - 深拷贝
@@ -349,12 +394,12 @@ Summary of interview experience
 - Webpack 性能优化
 - Webpack 构建流程
 - webpack 代码切割
-- loader 与 plugin plugin 遵循的事件流机制
+- loader 与 plugin，plugin 遵循的事件流机制
 
 ### 智力
 
 - 老虎吃羊问题
-- 13 黄 15 红 17 蓝，任意两种颜色加起来变成另外一种颜色（ps： 1 黄 + 1 红 = 2 蓝），请问可以吗，不可以的话为什么，有什么公式
+- 13 黄 15 红 17 蓝，任意两种颜色加起来变成另外一种颜色（ps： 1 黄 + 1 红 = 2 蓝），请问可以变成一种颜色吗，不可以的话为什么，有什么公式
 - 一共有 25 枚硬币，有十枚正面朝上，你可以翻转硬币，但是不能用手感知到硬币是否正面朝上。现在闭着眼睛将硬币分成两堆，问如何操作才能让两堆硬币正面朝上的个数相同
 - 三色龙（r,g,b）：每两只变色龙相遇会变成另一种，这三种满足什么数量关系可以最终全部变成一种颜色的
 
