@@ -8,6 +8,7 @@ Summary of interview experience
 
 - 宏任务与微任务
 - 闭包概念，应用（防抖节流）
+  > 函数可以记住并访问所在的词法作用域时，即使函数在当前词法作用域之外执行。
 - async/await 和 Promise 实现，await 返回什么
 - 输入 url 到返回内容发生了什么
 - 跨域方式，图片跨域，cookie 跨域
@@ -16,7 +17,8 @@ Summary of interview experience
 - BOM 和 DOM 的区别
 - 线程和进程
 - cookie 和 localstorge 的区别
-- apply，call 和 bind 区别，MDN 文档提供的 bind 函数 polyfill 实现细节
+- apply，call 和 bind 区别
+  > 都可以改变函数运行时上下文。apply 接受 this 和一个参数数组，call 接受 this 和若干个参数。bind 参数传递类似 apply，但返回一个函数。
 - echar 使用的是 svg 还是 canvas
   > canvas
 - 正则中的 i 具体做了什么事
@@ -29,7 +31,9 @@ Summary of interview experience
   > - Array.prototype.slice.call(arrLike)
   > - Array.from(arrLike)
 
-- 立即执行函数，是否是一种闭包
+- 立即执行函数（IIFE），是否是一种闭包
+  > 不是，函数并不是在本身词法作用域之外执行的。
+  > 防抖节流，函数柯里化，计时器，模块化。
 - js 继承如何实现
 - 原型链
 - ES6 寄生组合式
@@ -38,6 +42,7 @@ Summary of interview experience
 - 重排，重绘，合成层
 - MDN 的 bind 函数 polyfill 怎么实现的
 - map、{}、weakmap 区别
+  > map 可以用任意类型作为键名，对象只可以用 string 和 symbol，weakmap 只接受对象作为键名，且对该对象是弱引用。
 - [] == ![] ，[] == []
   > true, false。[] == []比较的是地址，不是同一个对象所以是 false。逻辑非的优先级高于相等操作符，所以先![]是 false
 - new 操作符原理
@@ -71,12 +76,14 @@ Summary of interview experience
 - ajax 实现原理，以及和 fetch 的区别
   > ajax 核心是 XMLHttpRequest 对象，存在回调地狱
   > fetch 是 XMLHttpRequest 的替代方案，脱离了 XHR，提供了丰富的 API,更加底层化，语法更简单，基于 promise 实现
-- requestAnimationFrame 和 setInterVal 区别？用 rAF 实现
+- requestAnimationFrame 和 setInterVal 区别
+  > requestAnimationFrame 方法与屏幕刷新率保持同步，利用这个刷新频率进行页面重绘。当页面处于未激活的状态下，该页面的屏幕绘制任务也会被系统暂停，rAF 也会停止渲染，当页面被激活时，动画就从上次停留的地方继续执行，有效节省了 CPU 开销。
+  > 使用 setInterval 实现动画容易失帧。
 - 判断数组的方法
 
   > - array instanceof Array
   > - array.constructor === Array
-  > - array.**proto**.constructor === Array
+  > - array.\_\_proto\_\_.constructor === Array
   > - Array.isArray(array)
   >
   > - ```javascript
@@ -88,34 +95,44 @@ Summary of interview experience
   >   ```
 
 - map 函数有几个参数
-  > callback(currentValue\*,index,array),this
+  > callback(**currentValue**,index,array),this
   > 返回由原数组每个元素执行回调函数的结果组成的新数组，不会对空数组检测
 - JS 加载阻塞 DOM 渲染问题怎么解决
-  > 放在代码最后延迟加载
-  > defer 延迟，在文档解析完成开始执行
-  > async 异步加载
-  > 动态创建 DOM
+
+  > - 放在代码最后延迟加载
+  > - defer 延迟，在文档解析完成开始执行
+  > - async 异步加载
+  > - 动态创建 DOM
+
 - 请说出以下代码打印的结果
 
   ```javascript
-  log(1)
+  console.log(1)
   setTimeout(() => {
-    log(2)
+    console.log(2)
   })
   Promise.resolve().then(() => {
-    log(3)
+    console.log(3)
   })
   var p = new Promise((res) => {
-    log(4)
+    console.log(4)
     setTimeout(() => {
       res(5)
-      log(6)
+      console.log(6)
     })
   })
   p.then((r) => {
-    log(r)
+    console.log(r)
   })
   ```
+
+  > 1
+  > 4
+  > 3
+  > Promise
+  > 2
+  > 6
+  > 5
 
 - 请说出以下代码打印的结果
 
@@ -134,6 +151,8 @@ Summary of interview experience
   }
   ```
 
+  > 1，3
+
 - 代码运行结果
 
   ```javascript
@@ -147,6 +166,10 @@ Summary of interview experience
   console.log(b)
   console.log(c.b)
   ```
+
+  > 3
+  > 3
+  > 执行 a()时将全局 b 赋值为 3
 
 - EventLoop 看代码
 
@@ -173,6 +196,15 @@ Summary of interview experience
   console.log('script end');
   ```
 
+  > script start
+  > async1 start
+  > async2
+  > promise1
+  > script end
+  > async1 end
+  > promise2
+  > setTimeout
+
 ### FreamWork
 
 - 什么是虚拟 DOM，批量更新了解么
@@ -191,6 +223,12 @@ Summary of interview experience
 - 原型链
 - diff 算法,Vue 和 react 的 diff 算法的区别
 - Vue 和 React 的不同点
+  > 监听数据变化的原理不同
+  > 数据流不同
+  > 功能组合方式（HOC 和 mixins）
+  > 组件通信的区别
+  > 模板渲染方式
+  > Redux 和 Vuex
 - Vuex 状态管理的理解，作用，原理
 - 如何让组件使用 Vuex 里的 status（MapStatus）
 
@@ -406,7 +444,7 @@ Summary of interview experience
 ### 其他
 
 - TS 泛型
-- 大文件上传 分片（Blob 对象） 流式处理（Stream）
+- 大文件上传，分片（Blob 对象），流式处理（Stream）
 - 如何统计用户的浏览时长，要考虑到用户会切换页面，缩放页面等。多个点进行上报时，如何区分这些数据来自于同一个会话？
   > [https://yq.aliyun.com/articles/635301](https://yq.aliyun.com/articles/635301)
 - 统计 uv 与 pv
