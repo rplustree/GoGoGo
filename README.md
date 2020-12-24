@@ -8,7 +8,8 @@ Summary of interview experience
 
 - 宏任务与微任务
 - 闭包概念，应用（防抖节流）
-  > 函数可以记住并访问所在的词法作用域时，即使函数在当前词法作用域之外执行。
+  > 函数可以记住并访问所在的词法作用域时，即使函数在当前词法作用域之外执行。  
+  > 防抖节流，函数柯里化，计时器，模块化。
 - async/await 和 Promise 实现，await 返回什么
 - 输入 url 到返回内容发生了什么
 - 跨域方式，图片跨域，cookie 跨域
@@ -18,8 +19,9 @@ Summary of interview experience
 - 线程和进程
 - cookie 和 localstorge 的区别
 - apply，call 和 bind 区别
-  > 都可以改变函数运行时上下文。apply 接受 this 和一个参数数组，call 接受 this 和若干个参数。bind 参数传递类似 apply，但返回一个函数。
-- echar 使用的是 svg 还是 canvas
+  > 都可以改变函数运行时上下文。apply 接受 this 和一个参数数组，call 接受 this 和若干个参数。  
+  > bind 参数传递类似 apply，但返回一个函数。
+- Echarts 使用的是 svg 还是 canvas
   > canvas
 - 正则中的 i 具体做了什么事
   > 把搜索修改为大小写不敏感
@@ -33,7 +35,6 @@ Summary of interview experience
 
 - 立即执行函数（IIFE），是否是一种闭包
   > 不是，函数并不是在本身词法作用域之外执行的。
-  > 防抖节流，函数柯里化，计时器，模块化。
 - js 继承如何实现
 - 原型链
 - ES6 寄生组合式
@@ -74,10 +75,10 @@ Summary of interview experience
   > 当函数执行的最后一步是返回另一个函数的调用就叫尾调用，当尾调用自身就是尾递归。不需要外层函数调用记录时，在最后 return 另一个函数，只保留内层函数的调用记录即为尾调用优化。
 - typeof instanceof
 - ajax 实现原理，以及和 fetch 的区别
-  > ajax 核心是 XMLHttpRequest 对象，存在回调地狱
+  > ajax 核心是 XMLHttpRequest 对象，存在回调地狱  
   > fetch 是 XMLHttpRequest 的替代方案，脱离了 XHR，提供了丰富的 API,更加底层化，语法更简单，基于 promise 实现
 - requestAnimationFrame 和 setInterVal 区别
-  > requestAnimationFrame 方法与屏幕刷新率保持同步，利用这个刷新频率进行页面重绘。当页面处于未激活的状态下，该页面的屏幕绘制任务也会被系统暂停，rAF 也会停止渲染，当页面被激活时，动画就从上次停留的地方继续执行，有效节省了 CPU 开销。
+  > requestAnimationFrame 方法与屏幕刷新率保持同步，利用这个刷新频率进行页面重绘。当页面处于未激活的状态下，该页面的屏幕绘制任务也会被系统暂停，requestAnimationFrame 也会停止渲染，当页面被激活时，动画就从上次停留的地方继续执行，有效节省了 CPU 开销。  
   > 使用 setInterval 实现动画容易失帧。
 - 判断数组的方法
 
@@ -95,7 +96,7 @@ Summary of interview experience
   >   ```
 
 - map 函数有几个参数
-  > callback(**currentValue**,index,array),this
+  > callback(**currentValue**,index,array),this  
   > 返回由原数组每个元素执行回调函数的结果组成的新数组，不会对空数组检测
 - JS 加载阻塞 DOM 渲染问题怎么解决
 
@@ -126,13 +127,7 @@ Summary of interview experience
   })
   ```
 
-  > 1
-  > 4
-  > 3
-  > Promise
-  > 2
-  > 6
-  > 5
+  > 1、4、3、Promise、2、6、5
 
 - 请说出以下代码打印的结果
 
@@ -167,43 +162,36 @@ Summary of interview experience
   console.log(c.b)
   ```
 
-  > 3
-  > 3
+  > 3  
+  > 3  
   > 执行 a()时将全局 b 赋值为 3
 
 - EventLoop 看代码
 
   ```javaScript
   async function async1() {
-  console.log('async1 start');
-  await async2();
-  console.log('async1 end');
+    console.log('async1 start');
+    await async2();
+    console.log('async1 end');
   }
   async function async2() {
-  console.log('async2');
+    console.log('async2');
   }
   console.log('script start');
   setTimeout(function () {
-  console.log('setTimeout');
+    console.log('setTimeout');
   }, 0);
   async1();
   new Promise(function (resolve) {
-  console.log('promise1');
-  resolve();
+    console.log('promise1');
+    resolve();
   }).then(function () {
-  console.log('promise2');
+    console.log('promise2');
   });
   console.log('script end');
   ```
 
-  > script start
-  > async1 start
-  > async2
-  > promise1
-  > script end
-  > async1 end
-  > promise2
-  > setTimeout
+  > script start、async1 start、async2、promise1、script end、async1 end、promise2、setTimeout
 
 ### FreamWork
 
@@ -223,12 +211,12 @@ Summary of interview experience
 - 原型链
 - diff 算法,Vue 和 react 的 diff 算法的区别
 - Vue 和 React 的不同点
-  > 监听数据变化的原理不同
-  > 数据流不同
-  > 功能组合方式（HOC 和 mixins）
-  > 组件通信的区别
-  > 模板渲染方式
-  > Redux 和 Vuex
+  > 监听数据变化的原理不同  
+  > 数据流不同  
+  > 功能组合方式（HOC 和 mixins）  
+  > 组件通信的区别  
+  > 模板渲染方式  
+  > Redux 和 Vuex  
 - Vuex 状态管理的理解，作用，原理
 - 如何让组件使用 Vuex 里的 status（MapStatus）
 
