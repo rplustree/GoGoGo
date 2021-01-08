@@ -17,6 +17,7 @@ Summary of interview experience
 - 怎么给数据结构添加迭代器
 - BOM 和 DOM 的区别
 - 线程和进程
+  > 进程是 CPU 资源分配的最小单位，线程是 CPU 调度的最小单位
 - cookie 和 localstorge 的区别
 - apply，call 和 bind 区别
   > 都可以改变函数运行时上下文。apply 接受 this 和一个参数数组，call 接受 this 和若干个参数。  
@@ -74,6 +75,8 @@ Summary of interview experience
 - 尾调用，尾递归，尾调用优化
   > 当函数执行的最后一步是返回另一个函数的调用就叫尾调用，当尾调用自身就是尾递归。不需要外层函数调用记录时，在最后 return 另一个函数，只保留内层函数的调用记录即为尾调用优化。
 - typeof instanceof
+  > js 不同的对象在底层存储为为二进制，前三位存储其类型信息。  
+  > instanceof 运算符用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性。
 - ajax 实现原理，以及和 fetch 的区别
   > ajax 核心是 XMLHttpRequest 对象，存在回调地狱  
   > fetch 是 XMLHttpRequest 的替代方案，脱离了 XHR，提供了丰富的 API,更加底层化，语法更简单，基于 promise 实现
@@ -272,7 +275,7 @@ Summary of interview experience
 - 知道 refer 头部吗，直接请求服务器时 refer 是多少，在 CSRF 中的作用
 - HTTP 和 Websocket 的联系
 - 请求头常见字段
-- catheControl 的值，服务端拿什么与客户端进行通信
+- cathe-control 的值，服务端拿什么与客户端进行通信
 - 三次握手
 - 为什么有了 last-modified 还需要 etag
 - HTTP 缓存 强缓存与协商缓存相关请求头与响应字段
