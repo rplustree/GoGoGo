@@ -289,22 +289,22 @@ Summary of interview experience
 
 ### Code
 
-- [斐波那契数列](https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/)
+- ~~[斐波那契数列](https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/)~~
 - [最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)
-- [最长上升子序列长度](https://leetcode-cn.com/problems/longest-increasing-subsequence/)
-- [最大连续子数组](https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/)
-- [顺时针打印矩阵](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)
+- ~~[最长上升子序列长度](https://leetcode-cn.com/problems/longest-increasing-subsequence/)~~
+- ~~[最大连续子数组](https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/)~~
+- ~~[顺时针打印矩阵](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)~~
 - [二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
 - [求二叉树的公共祖先节点](https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
 - [和至少为 K 的最短子数组](https://leetcode-cn.com/problems/shortest-subarray-with-sum-at-least-k/)
 - [字符串的排列](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/)
-- [有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)
+- ~~[有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)~~
 - [栈的压入、弹出序列](https://leetcode-cn.com/problems/zhan-de-ya-ru-dan-chu-xu-lie-lcof/)
-- [字符串转千分位](https://leetcode-cn.com/problems/thousand-separator/)
-- [买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)
+- ~~[字符串转千分位](https://leetcode-cn.com/problems/thousand-separator/)~~
+- ~~[买卖股票的最佳时机](https://leetcode-cn.com/problems/best-time-to-buy-and-sell-stock/)~~
 - [满足条件的子序列数目](https://leetcode-cn.com/problems/number-of-subsequences-that-satisfy-the-given-sum-condition/)
 - [最小栈](https://leetcode-cn.com/problems/min-stack/)
-- [大数相加](https://leetcode-cn.com/problems/add-two-numbers/)
+- ~~[大数相加](https://leetcode-cn.com/problems/add-two-numbers/)~~
 - [通配符匹配](https://leetcode-cn.com/problems/wildcard-matching/)
 - 输出 1-10000 所有回文数
 - 手写 bind
