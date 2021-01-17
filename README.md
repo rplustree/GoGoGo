@@ -290,12 +290,12 @@ Summary of interview experience
 ### Code
 
 - ~~[斐波那契数列](https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/)~~
-- [最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)
+- ~~[最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)~~
 - ~~[最长上升子序列长度](https://leetcode-cn.com/problems/longest-increasing-subsequence/)~~
 - ~~[最大连续子数组](https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/)~~
 - ~~[顺时针打印矩阵](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)~~
-- [二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)
-- [求二叉树的公共祖先节点](https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)
+- ~~[二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)~~
+- ~~[求二叉树的公共祖先节点](https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)~~
 - [和至少为 K 的最短子数组](https://leetcode-cn.com/problems/shortest-subarray-with-sum-at-least-k/)
 - [字符串的排列](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/)
 - ~~[有效的字母异位词](https://leetcode-cn.com/problems/valid-anagram/)~~
@@ -428,9 +428,12 @@ Summary of interview experience
 ### 智力
 
 - 老虎吃羊问题
+  > 老虎数量为奇数吃羊，为偶数不吃
 - 13 黄 15 红 17 蓝，任意两种颜色加起来变成另外一种颜色（ps： 1 黄 + 1 红 = 2 蓝），请问可以变成一种颜色吗，不可以的话为什么，有什么公式
-- 一共有 25 枚硬币，有十枚正面朝上，你可以翻转硬币，但是不能用手感知到硬币是否正面朝上。现在闭着眼睛将硬币分成两堆，问如何操作才能让两堆硬币正面朝上的个数相同
+  > 两两之间的差值等于 3 的倍数
 - 三色龙（r,g,b）：每两只变色龙相遇会变成另一种，这三种满足什么数量关系可以最终全部变成一种颜色的
+- 一共有 25 枚硬币，有十枚正面朝上，你可以翻转硬币，但是不能用手感知到硬币是否正面朝上。现在闭着眼睛将硬币分成两堆，问如何操作才能让两堆硬币正面朝上的个数相同
+  > 将硬币分为两堆，15 个和 10 个，将 10 个的全部翻面则正面朝上的一样多
 
 ### 其他
 
