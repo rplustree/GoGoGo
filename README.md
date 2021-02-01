@@ -198,21 +198,27 @@ Summary of interview experience
 
 ### FreamWork
 
-- 什么是虚拟 DOM，批量更新了解么
 - 收集依赖的过程和原理
 - VUE 响应式如何实现
 - 如何解除双向绑定
-- 如何实现数组的监听，为什么 push 这些数组操作可以实现
+  > 数据深拷贝
+- v-model 的原理，Vue 实例是怎么拿到 data 属性的
+  > 是个语法糖，在给 input 元素添加 v-model 属性时，默认会把 value 作为元素的属性，然后把 input 事件作为实时传递 value 的触发事件。  
+  > vue 在实例化的时候，在 getData 方法中用 call 修改了指针，使 data 指向了 vm 实例
+- 如何实现数组的监听，为什么 push 这些数组操作可以实现？
 - proxy 的优势
-- vue 的数组方法可以实现吗？为什么这些 push 的数组方法可以而直接令 arr[x] = xx 不可以呢？
+- vue 的数组方法可以实现响应式吗？为什么这些 push 的数组方法可以而直接令 arr[x] = xx 不可以呢？
+  > 因为没有重写下标属性的 get 和 set 方法
 - vue 自定义指令
-- nextTick
+- nextTick()
 - composition API
+- 什么是虚拟 DOM，批量更新了解么
+- diff 算法,Vue 和 react 的 diff 算法的区别
 - 浏览器路由，hashchage 了解么
 - 组件通信
-- v-model 的原理，Vue 实例是怎么拿到 data 属性的
-- 原型链
-- diff 算法,Vue 和 react 的 diff 算法的区别
+  > 父子组件：prop/$emit,$children/$parent(不推荐),refs,  
+  > 隔代组件：provide/inject,$attrs/$listeners  
+  > 兄弟组件：eventBus,Vuex
 - Vue 和 React 的不同点
   > 监听数据变化的原理不同  
   > 数据流不同  
@@ -221,7 +227,8 @@ Summary of interview experience
   > 模板渲染方式  
   > Redux 和 Vuex
 - Vuex 状态管理的理解，作用，原理
-- 如何让组件使用 Vuex 里的 status（MapStatus）
+- 如何让组件使用 Vuex 里的 status
+  > mapState
 
 ### HTML
 
@@ -262,30 +269,67 @@ Summary of interview experience
 - OSI 五层（七层）协议
   > 物理层，数据链路层，通信层，传输层，（会话层，状态层），应用层
 - get 和 post 区别
+  > 前者获取数据，后者提交修改数据  
+  > 前者参数会附在 url 上明文传输，有长度限制，后者放在请求体中，无限制  
+  > 前者可收藏为书签可以被缓存，参数被保存在历史记录中
+  > 前者是幂等请求
+- HTTP 请求的幂等概念的理解以及常见请求的幂等性
 - HTTP 头设置什么可以获取用户 IP
+  > X-Forwarded-For:client,proxy1,proxy2
 - http 协议报文结构
-- HTTP 状态码，200 fromcache 的情况，499
+  > 请求头：方法 url 版本  
+  > 请求体  
+  > 请求正文  
+  > 响应头：版本 响应码 原因短语  
+  > 响应体  
+  > 响应正文
+- HTTP 状态码 200 fromcache 的情况，499
+  > 命中强缓存，cache-control:max-age=XXX,Expries:XXX（会被前者覆盖）  
+  > 499 是服务端处 c 理时间过长，客户端主动关闭了连接
+- 为什么有了 last-modified 还需要 etag
+  > 一些文件也许会周期性的更改，但是他的内容并不改变(仅仅改变的修改时间)，这个时候我们并不希望客户端认为这个文件被修改了，而重新 GET  
+  > 某些文件修改非常频繁，比如在秒以下的时间内进行修改，(比方说 1s 内修改了 N 次)，If-Modified-Since 能检查到的粒度是 s 级的，这种修改无法判断(或者说 UNIX 记录 MTIME 只能精确到秒)  
+  > 某些服务器不能精确的得到文件的最后修改时间
+- HTTP 缓存，强缓存与协商缓存相关请求头与响应字段
+  > 强缓存：Expires,cache-control  
+  > 协商缓存：上次响应头 Etag 和 Last-Modified，对应请求头 If-None_Match,If-Modified-Since
+- cache-control 的值
+  > public: 所有内容都被缓存  
+  > private: 内容只被缓存在私有缓存中  
+  > no-cache: 不直接使用缓存，要求请求  
+  > no-store: 所有内容都不会被保存在缓存中或者 Internet 临时文件中  
+  > max-age
 - http1.0,http2.0
 - CSRF
 - XSS
 - TCP 和 UDP 区别
-- HTTP 请求的幂等概念的理解以及常见请求的幂等性
+  > TCP 面向链连接，只能一对一通信，UDP 无连接不可靠传输，且支持多种交互通信  
+  > TCP 面向字节流，UDP 面向报文  
+  > TCP 首部开销大，UDP 只有 8 字节  
+  > TCP 用于可靠传输应用，比如文件传输，UDP 适用于实时应用
 - option 预请求
 - 跨域的同时携带 cookie
-- 知道 refer 头部吗，直接请求服务器时 refer 是多少，在 CSRF 中的作用
-- HTTP 和 Websocket 的联系
+  > Access-Control-Allow-Credentials:true  
+  > Access-Control-Allow-Origin 为单一域名  
+  > 请求属性 withCredentials = true
+- 知道 referer 头部吗，直接请求服务器时 referer 是多少，在 CSRF 中的作用
+  > 引荐网站的地址，在点击网页的链接，发送表单，加载静态资源会发送 referer 字段，直接输入网址或者点击书签不会发送。  
+  > 使用 rel="noreferrer"不会发送该字段，或者设置 Referrer Policy 首部  
+  > 验证 referer 可以有效的防止 CSRF
 - 请求头常见字段
-- cathe-control 的值，服务端拿什么与客户端进行通信
 - 三次握手
-- 为什么有了 last-modified 还需要 etag
-- HTTP 缓存 强缓存与协商缓存相关请求头与响应字段
 - DNS 解析过程
 - cookie setCookie 常见 cookie 属性
 - session
 - token 作用，可以改进的点，缺陷在哪（JWT）
+- HTTP 和 Websocket 的联系
 - websocket 过程，websocket 丢包怎么解决
+  > 握手：客户端握手请求，服务端拼接 Sec-WebSocket-Key 和全局唯一标识 258EAFA5-E914-47DA-95CA-C5AB0DC85B11，然后经过 SHA-1 hash 编码和 base64 编码作为服务端的握手返回  
+  > 数据传输的基本单位为 Messages，这些 Message 由一个或多个 Frames 组成  
+  > 可以使用 TCP 的关闭方法或者任意一点发送指定控制序号的数据的帧，另一方接收到后关闭连接
 - https
 - 服务端推送
+- 服务端拿什么与客户端进行通信
 
 ### Code
 
