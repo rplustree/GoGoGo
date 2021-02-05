@@ -2,11 +2,11 @@
 // 参数复用，提前调用，延迟执行
 // add(1)(2, 4)(6) = 12
 function curry(fn, currArgs) {
-  let args = []
+  let allArgs = []
   return function next() {
     let args = Array.prototype.slice.call(arguments)
     if (args.length > 0) {
-      args = args.concat(args)
+      allArgs = allArgs.concat(args)
       return next
     } else {
       return next.apply(null, args)

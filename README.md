@@ -15,6 +15,24 @@ Summary of interview experience
 - 跨域方式，图片跨域，cookie 跨域
 - token
 - 怎么给数据结构添加迭代器
+
+  > 给数据结构添加[Symbol.iterator]方法，该方法返回一个遍历器对象，是 next 方法，next 执行返回当前成员信息，包含 value 和 done
+  >
+  > ```javaScript
+  > Object.prototype[Symbol.iterator] = function () {
+  >    const keys = Object.keys(this);
+  >    let index = 0;
+  >    return {
+  >        next: () => {
+  >            return {
+  >                value: this[keys[index++]], // 每次迭代的结果
+  >                done: index > keys.length // 迭代结束标识 false停止迭代，true继续迭代
+  >            };
+  >        }
+  >    }
+  > }
+  > ```
+
 - BOM 和 DOM 的区别
 - 线程和进程
   > 进程是 CPU 资源分配的最小单位，线程是 CPU 调度的最小单位
@@ -71,6 +89,7 @@ Summary of interview experience
 - 如何判断一个对象为空（如何判断 symbol 对象为空）
 - 事件代理
 - 装箱拆箱，隐式转换原则
+  >
 - V8 与 Libuv 事件循环的差异
 - 尾调用，尾递归，尾调用优化
   > 当函数执行的最后一步是返回另一个函数的调用就叫尾调用，当尾调用自身就是尾递归。不需要外层函数调用记录时，在最后 return 另一个函数，只保留内层函数的调用记录即为尾调用优化。
@@ -251,12 +270,22 @@ Summary of interview experience
 - CSS 实现骰子 3 的那面
 - 多行超出显示省略号
 - rem 和 em 原理
+
+  > em 作为 font-size 的单位时，其代表父元素的字体大小，em 作为其他属性单位时，代表自身字体大小  
+  > rem 作用于非根元素时，相对于根元素字体大小；rem 作用于根元素字体大小时，相对于其出初始字体大小，让 html 字体大小一直等于屏幕宽度的百分之一，在页面 domReady、resize 和屏幕旋转中设置
+  >
+  > ```javaScript
+  > document.documentElement.style.fontSize = document.documentElement.clientWidth / 100 + 'px'`
+  > ```
+
 - BFC 以及触发方式，怎么解决自适应问题的
 - 垂直居中
 - 样式重叠怎么解决
 - 移动端和 pc 端布局方案
 - 盒模型 content-box 和 border-box
-- display:none;visibility: hidden;opacity:0 的区别
+- display:none/visibility: hidden/opacity:0 的区别
+  > display:none 隐藏后不占据空间，引起重排重绘，不会被继承，无法触发绑定事件。  
+  > visibility: hidden 和 opacity:0 占据空间，只会重绘，可被继承，opacity:0 邦定事件可以触发，可以用于 transition
 - transition 和 animation，哪一个性能更好
 - cssModules
 - GPU 加速开启（3d 属性）与原理（GPU）
@@ -296,7 +325,7 @@ Summary of interview experience
 - cache-control 的值
   > public: 所有内容都被缓存  
   > private: 内容只被缓存在私有缓存中  
-  > no-cache: 不直接使用缓存，要求请求  
+  > no-cache: 不直接使用缓存，要协商缓存  
   > no-store: 所有内容都不会被保存在缓存中或者 Internet 临时文件中  
   > max-age
 - http1.0,http2.0
@@ -318,10 +347,25 @@ Summary of interview experience
   > 验证 referer 可以有效的防止 CSRF
 - 请求头常见字段
 - 三次握手
+  > 第一次，客户端向服务端发送 SYN 报文（SYN 标志位为 1），指明自己的 ISN（初始 seq = x），客户端处于 SYN_SEND 状态  
+  > 第二次，服务端收到后发送 SYN 报文，指定自己的 ISN（seq = y），同时将收到的 x+1 作为 ACK 确认发送给客户端，此时服务端处于 SYN_REVD 状态  
+  > 第三次，客户端将服务端的 y+1 作为 ACK 发送给服务端，收到后双方都处于 ESTABLISHED 状态
+- 四次挥手
+  > 客户端发起关闭请求，发送 FIN 报文，指 seq = x，处于 FIN_WAIT1 状态  
+  > 服务端收到后发送 ACK（ack = x+1），处于 CLOSE_WAIT 状态  
+  > 服务端发送完数据后，发送 FIN（seq = y）和 ACK（ack = x+1）,处于 LAST_ACK 状态  
+  > 客户端发送 ACK(seq = x+1，ack = y+1),进入 TIME_WAIT 状态，经过 2MSL（MSL 为两分钟） 后，客户端 CLOSED，服务端收到后 CLOSED
 - DNS 解析过程
-- cookie setCookie 常见 cookie 属性
-- session
-- token 作用，可以改进的点，缺陷在哪（JWT）
+- Set-Cookie 常见 cookie 属性
+  > value,expires,domain,path,secure
+- 前端鉴权
+  > HTTP Basic Authentication
+  > session-cookie  
+  > token  
+  > OAuth
+- token 作用，缺陷在哪（JWT）
+  > 前端鉴权  
+  > 默认的 token 不加密，延长 token 需要前端替换旧 token
 - HTTP 和 Websocket 的联系
 - websocket 过程，websocket 丢包怎么解决
   > 握手：客户端握手请求，服务端拼接 Sec-WebSocket-Key 和全局唯一标识 258EAFA5-E914-47DA-95CA-C5AB0DC85B11，然后经过 SHA-1 hash 编码和 base64 编码作为服务端的握手返回  
@@ -334,11 +378,13 @@ Summary of interview experience
 ### Code
 
 - ~~[斐波那契数列](https://leetcode-cn.com/problems/fei-bo-na-qi-shu-lie-lcof/)~~
+- ~~[二叉树镜像](https://leetcode-cn.com/problems/er-cha-shu-de-jing-xiang-lcof/submissions/)~~
 - ~~[最长不含重复字符的子字符串](https://leetcode-cn.com/problems/zui-chang-bu-han-zhong-fu-zi-fu-de-zi-zi-fu-chuan-lcof/)~~
 - ~~[最长上升子序列长度](https://leetcode-cn.com/problems/longest-increasing-subsequence/)~~
 - ~~[最大连续子数组](https://leetcode-cn.com/problems/lian-xu-zi-shu-zu-de-zui-da-he-lcof/)~~
 - ~~[顺时针打印矩阵](https://leetcode-cn.com/problems/shun-shi-zhen-da-yin-ju-zhen-lcof/)~~
 - ~~[二叉树中和为某一值的路径](https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/)~~
+- ~~[比较版本号](https://leetcode-cn.com/problems/compare-version-numbers/)~~
 - ~~[求二叉树的公共祖先节点](https://leetcode-cn.com/problems/er-cha-shu-de-zui-jin-gong-gong-zu-xian-lcof/)~~
 - [和至少为 K 的最短子数组](https://leetcode-cn.com/problems/shortest-subarray-with-sum-at-least-k/)
 - [字符串的排列](https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/)
