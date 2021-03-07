@@ -13,10 +13,9 @@ Summary of interview experience
 - async/await 和 Promise 实现，await 返回什么
 - 输入 url 到返回内容发生了什么
 - 跨域方式，图片跨域，cookie 跨域
-- token
 - 怎么给数据结构添加迭代器
 
-  > 给数据结构添加[Symbol.iterator]方法，该方法返回一个遍历器对象，是 next 方法，next 执行返回当前成员信息，包含 value 和 done
+  > 给数据结构添加 [Symbol.iterator] 方法，该方法返回一个遍历器对象，是 next 方法，next 执行返回当前成员信息，包含 value 和 done
   >
   > ```javaScript
   > Object.prototype[Symbol.iterator] = function () {
@@ -217,8 +216,14 @@ Summary of interview experience
 
 ### FreamWork
 
-- 收集依赖的过程和原理
-- VUE 响应式如何实现
+- VUE 响应式如何实现，收集依赖的过程和原理
+  > 数据监听 + 发布订阅模式  
+  > 依赖收集  
+  > 数据初始化，被 Object.defineProperty()设置 getter 和 setter 函数，被响应式的属性都有 Dep 对象  
+  > 组件在挂载阶段，调用 mountComponent 方法会新建 Watcher 对象,每个组件对应一个 Watcher  
+  > Watcher 在构造函数中会触发组件的\_render()函数（\_render() 是由 Watcher 代替组件执行的），此函数会触发数据的 getter()方法，执行 dep.depend(),相当于执行了当前 Watcher 的 addDep()，在 addDep()中 Watcher 保存了该 dep 对象，而且执行了 dep 的 addsub()订阅方法  
+  > 派发更新  
+  > 修改 data 的响应式属性会触发该属性的 setter 方法，在 setter 中触发 dep.notify(),依次调用依赖该属性的 Vue 组件的更新函数
 - 如何解除双向绑定
   > 数据深拷贝
 - v-model 的原理，Vue 实例是怎么拿到 data 属性的
@@ -230,9 +235,22 @@ Summary of interview experience
   > 因为没有重写下标属性的 get 和 set 方法
 - vue 自定义指令
 - nextTick()
+  > 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。
 - composition API
 - 什么是虚拟 DOM，批量更新了解么
-- diff 算法,Vue 和 react 的 diff 算法的区别
+- diff 算法，Vue 和 react 的 diff 算法的区别
+  > 数据改变时，setter 方法通知 Watcher，调用 patch 给真实的 DOM 打补丁  
+  > patch 会先判断 sameNode，值得比较就执行 patchVnode  
+  > patchVnode 只比较同层级的节点，执行 updateChildren 函数比较子节点  
+  > updateChildren 取出新旧 Vdom 的子节点取出，分别有头尾两个指针 oldStartIdx、newStartIdx、oldEndIdx、newEndIdx，当 oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx 时，有四种比较情况，每次比较完后指针移动：
+  >
+  > - 旧头和新头 sameVnode，patchVnode
+  > - 旧尾和新尾 sameVnode，patchVnode
+  > - 旧头和新尾 sameVnode，dom 第一节点移到最后
+  > - 旧尾和新头 sameVnode，dom 最后节点移到开头
+  >
+  > 若未能匹配到以上规则，创建一张旧节点的 key 的 map 表，拿新节点的 key 去查找。如果没找到，新建元素节点，如果有的话，判断是否是 sameVnode，是的话 patchVnode 并 insertBefore ,否的话创建新元素  
+  > 旧节点循环先完的话，add 剩下的新节点，新节点先循环完的画，删除剩余的旧节点
 - 浏览器路由，hashchage 了解么
 - 组件通信
   > 父子组件：prop/$emit,$children/$parent(不推荐),refs,  
@@ -253,6 +271,7 @@ Summary of interview experience
 
 - HTML5 特性
 - script 标签中 async 和 defer 的区别
+  > async 会异步加载执行 js，不按顺序执行。defer 会异步加载 js，等所有元素解析完成，在 DOMContentLoaded 事件触发之前完成。
 - src 和 href 区别
   > src 引入并替换当前标签，href 在当前文档和资源之间确立联系
 - 块元素、行内元素有哪些？区别
@@ -262,6 +281,15 @@ Summary of interview experience
 - CSS3 特性
 - css 选择器优先级
 - 三栏布局
+  > 浮动，content 在最后，两侧浮动定宽  
+  > 定位布局  
+  > flex  
+  > table 布局,父元素 disply: table，子元素 display: table-cell,左右定宽  
+  > grid 布局，display: grid; grid-template-columns: 100px 1fr 100px;
+- 两栏布局
+  > float + margin-left  
+  > 相对定位  
+  > flex
 - 圣杯布局
 - 怎么理解负 margin
 - 垂直居中
@@ -314,7 +342,7 @@ Summary of interview experience
   > 响应正文
 - HTTP 状态码 200 fromcache 的情况，499
   > 命中强缓存，cache-control:max-age=XXX,Expries:XXX（会被前者覆盖）  
-  > 499 是服务端处 c 理时间过长，客户端主动关闭了连接
+  > 499 是服务端处理时间过长，客户端主动关闭了连接
 - 为什么有了 last-modified 还需要 etag
   > 一些文件也许会周期性的更改，但是他的内容并不改变(仅仅改变的修改时间)，这个时候我们并不希望客户端认为这个文件被修改了，而重新 GET  
   > 某些文件修改非常频繁，比如在秒以下的时间内进行修改，(比方说 1s 内修改了 N 次)，If-Modified-Since 能检查到的粒度是 s 级的，这种修改无法判断(或者说 UNIX 记录 MTIME 只能精确到秒)  
@@ -329,8 +357,24 @@ Summary of interview experience
   > no-store: 所有内容都不会被保存在缓存中或者 Internet 临时文件中  
   > max-age
 - http1.0,http2.0
+
+  > - 二进制分帧传输
+  > - https
+  > - 服务端推送
+  > - 首部压缩(HPACK)
+  > - 请求优先级
+  > - 多路复用
+
 - CSRF
 - XSS
+
+  > 分为存储型，反射型和 DOM 型，反射型只执行一次，持久性会存入数据库造成更大危害  
+  > 防范手段：
+  >
+  > - 对标签过滤
+  > - 纯前端渲染
+  > - 对常见的符号进行编码，例如<>，&，/之类
+
 - TCP 和 UDP 区别
   > TCP 面向链连接，只能一对一通信，UDP 无连接不可靠传输，且支持多种交互通信  
   > TCP 面向字节流，UDP 面向报文  
@@ -351,15 +395,17 @@ Summary of interview experience
   > 第二次，服务端收到后发送 SYN 报文，指定自己的 ISN（seq = y），同时将收到的 x+1 作为 ACK 确认发送给客户端，此时服务端处于 SYN_REVD 状态  
   > 第三次，客户端将服务端的 y+1 作为 ACK 发送给服务端，收到后双方都处于 ESTABLISHED 状态
 - 四次挥手
-  > 客户端发起关闭请求，发送 FIN 报文，指 seq = x，处于 FIN_WAIT1 状态  
+  > 客户端发起关闭请求，发送 FIN 报文，指明 seq = x，处于 FIN_WAIT1 状态  
   > 服务端收到后发送 ACK（ack = x+1），处于 CLOSE_WAIT 状态  
   > 服务端发送完数据后，发送 FIN（seq = y）和 ACK（ack = x+1）,处于 LAST_ACK 状态  
-  > 客户端发送 ACK(seq = x+1，ack = y+1),进入 TIME_WAIT 状态，经过 2MSL（MSL 为两分钟） 后，客户端 CLOSED，服务端收到后 CLOSED
+  > 客户端发送 ACK(seq = x+1，ack = y+1),进入 TIME_WAIT 状态，经过 2MSL（最长报文段寿命，默认为两分钟） 后，客户端 CLOSED，服务端收到后 CLOSED
 - DNS 解析过程
+  > 浏览器缓存 -> host 文件 >- 路由器缓存 -> LDNS(本地域名解析服务系统)  
+  > LDNS 代替主机依次向根域名服务器，顶级域名服务器，次级域名服务器发起递归查询
 - Set-Cookie 常见 cookie 属性
   > value,expires,domain,path,secure
 - 前端鉴权
-  > HTTP Basic Authentication
+  > HTTP Basic Authentication  
   > session-cookie  
   > token  
   > OAuth
@@ -401,8 +447,45 @@ Summary of interview experience
 - 实现一个{{}}语法
 - 实现一个 promise.race
 - 使用 Promise 实现 sleep(1000).then(()=>{console.log(2)})，先打印 1 过一秒打印 2
+
+> ```javaScript
+> function sleep(delay) {
+>   delay = delay || 1000
+>   return new Promise((resolve, reject) => {
+>     setTimeout(() => {
+>       resolve(1)
+>      }, delay)
+>   })
+> }
+> ;(async function () {
+>   for (let i = 0; i < 10; i++) {
+>     await sleep(1000)
+>     console.log(i)
+>   }
+> })()
+> ```
+
 - 多行字符串转二维数组
 - 每隔一秒输出数组一项
+
+> ```javaScript
+> const arr = [1,2,3,4,5,6]
+> function sleep(delay) {
+>   delay = delay || 1000
+>   return new Promise((resolve, reject) => {
+>     setTimeout(() => {
+>       resolve(1)
+>      }, delay)
+>   })
+> }
+> ;(async function () {
+>   for (let i = 0; i < arr.length; i++) {
+>     await sleep(1000)
+>     console.log(arr[i])
+>   }
+> })()
+> ```
+
 - 页面所有节点数
 - jsonp
 - 深拷贝
@@ -414,35 +497,12 @@ Summary of interview experience
 - 基于 XHR 封装 fetch
 - CSS 动画，div 每秒移动 100px
 - CSS 画三角形
-- 实现随机抽奖及优化 -统计一个字符串出现最多的字母：给出一段英文连续的英文字符串，找出重复出现次数最多的字母和它出现的次数
+- 实现随机抽奖及优化
+- 统计一个字符串出现最多的字母：给出一段英文连续的英文字符串，找出重复出现次数最多的字母和它出现的次数
 - 倒计时 截止时间 2020 年 11 月 11 日 0 点显示“剩余 XX 天 XX 时 XX 分 XX 秒”每秒刷新一次
 - 二维数组 45° 输出
 - 实现 fetchWithRetry(url, param, times, delay)到期结束，失败次数达到结束，不然就重试
 - 三个异步 fetch 请求，只要有一个请求变成 resolve，那么就输出对应的 result，并结束。如果请求过程中出现错误，则需要在最后输出错误信息
-- 实现深搜索，例如对于这样一个数组 city 和指定的 code，输出对应的 name：
-
-  ```javascript
-  var city = [
-    {
-      code: 0,
-      name: 'beijing',
-    },
-    {
-      code: 211,
-      name: 'jiangsu',
-      children: [
-        {
-          code: 212,
-          name: 'nanjing',
-        },
-      ],
-    },
-  ]
-  function search(code) {
-    // code
-    return name
-  }
-  ```
 
 - 实现一个 foo 函数, 返回自身被调用的次数
 
@@ -472,6 +532,20 @@ Summary of interview experience
 
   ```javascript
   var object = { a: [{ b: { c: 3 } }] }
+  function get(obj, str) {
+    const list = str.split('.')
+    return list.reduce((pre, cur) => {
+      let index = cur.indexOf('[')
+      let index1 = cur.indexOf(']')
+      if (index >= 0) {
+        let key = cur.substring(0, index)
+        let val = cur.substring(index + 1, index1)
+        return pre[key][val]
+      } else {
+        return pre[cur]
+      }
+    }, obj)
+  }
   get(object, 'a[0].b.c')
   //应该返回 3
   ```
@@ -502,17 +576,56 @@ Summary of interview experience
   }
   ```
 
+- 实现一个批量请求函数 multiRequest(urls, maxNum)，要求如下：  
+  • 要求最大并发数 maxNum  
+  • 每当有一个请求返回，就留下一个空位，可以增加新的请求  
+  • 所有请求完成后，结果按照 urls 里面的顺序依次打出
+
+  ```javaScript
+  function multiRequest(urls = [], maxNum) {
+    const len = urls.length
+    const res = new Array(len).fill(false)
+    let count = 0
+    return new Promise((resolve, reject) => {
+      while (count < maxNum) next()
+      function next() {
+        let cur = count++
+        if (cur >= len) {
+          !res.includes(false) && resolve(res)
+          return
+        }
+        const url = urls[cur]
+        console.log(`开始 ${cur}`, new Date().toLocaleString())
+        fetch(url)
+          .then((res) => {
+            res[cur] = res
+            console.log(`完成 ${cur}`, new Date().toLocaleString())
+            if (cur < len) next()
+          })
+          .catch((err) => {
+            console.log(`结束 ${cur}`, new Date().toLocaleString())
+            res[cur] = res
+            if (cur < len) next()
+          })
+      }
+    })
+  }
+  ```
+
 ### 性能优化，前端工程化
 
 - 异步加载路由时，webpack chunk 的加载顺序怎么保证正确
 - 优化首屏渲染的方式有哪几种
-- Ssr 的渲染原理，与 csr 的区别
+- ssr 的渲染原理，与 csr 的区别
 - eslint 的工作原理，怎么写一个 eslint rule
 - Babel 原理，编译过程
+  > 解析，将代码转换成 AST  
+  > 转换，访问 AST 的系欸但进行变换操作产生新的 AST  
+  > 生成，用新 AST 为基础生成新代码
 - tree-shaking，为什么编译目标得是 ES6（ESM 静态优化机制）
 - Webpack 性能优化
 - Webpack 构建流程
-- webpack 代码切割
+- Webpack 代码切割
 - loader 与 plugin，plugin 遵循的事件流机制
 
 ### 智力
