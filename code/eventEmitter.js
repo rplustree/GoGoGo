@@ -1,20 +1,36 @@
-var longestCommonSubsequence = function (text1, text2) {
-  let len1 = text1.length
-  let len2 = text2.length
-  let dp = new Array(len1 + 1)
-  for (let i = 0; i < len1 + 1; i++) {
-    dp[i] = new Array(len2 + 1)
-    dp[i].fill(0)
-    for (let j = 0; j < len2 + 1; j++) {
-      if (i !== 0 && j !== 0) {
-        if (text1[i - 1] === text2[j - 1]) {
-          dp[i][j] = dp[i - 1][j - 1] + 1
-        } else {
-          dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j])
-        }
-      }
+class eventEmitter {
+  constructor() {
+    this.events = new Map()
+  }
+  addEvent(key, fn, isOnce, ...args) {
+    const value =
+      this.events.get(key) || this.events.set(key, new Map()).get(key)
+    value.set(fn, (...args1) => {
+      fn(...args, ...args1)
+      isOnce && this.off(key, fn)
+    })
+  }
+  on(key, fn, ...args) {
+    if (!fn) {
+      return console.error('没有回调函数')
+    }
+    this.addEvent(key, fn, false, ...args)
+  }
+  once(key, fn, ...args) {
+    this.addEvent(key, fn, true, ...args)
+  }
+  off(key, fn) {
+    if (this.events.get(key)) {
+      this.events.get(key).delete(fn)
     }
   }
-  return dp[len1][len2]
+  emit(key, ...args) {
+    if (!this.events.get(key)) {
+      console.warn('没有该事件')
+      return
+    }
+    for (let cb of this.events.get(key).values()) {
+      cb(...args)
+    }
+  }
 }
-console.log(longestCommonSubsequence('abc', 'def'))

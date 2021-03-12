@@ -3,7 +3,9 @@ function debounce(func, delay) {
   return function () {
     let context = this
     let args = arguments
-    clearTimeout(timer)
+    if (timer) {
+      clearTimeout(timer)
+    }
     timer = setTimeout(() => {
       func.apply(context, args)
     }, delay)
