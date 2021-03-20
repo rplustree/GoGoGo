@@ -4,6 +4,8 @@ Summary of interview experience
 
 ## ByteDance
 
+---
+
 ### JavaScript
 
 - 宏任务与微任务
@@ -56,7 +58,7 @@ Summary of interview experience
 - js 继承如何实现
 - 原型链
 - ES6 寄生组合式
-- ES6 继承 实例成员与静态成员处理
+- ES6 继承,实例成员与静态成员处理
 - 用 es6 实现实例继承
 - 重排，重绘，合成层
 - MDN 的 bind 函数 polyfill 怎么实现的
@@ -214,16 +216,14 @@ Summary of interview experience
 
   > script start、async1 start、async2、promise1、script end、async1 end、promise2、setTimeout
 
+---
+
 ### FreamWork
 
 - VUE 响应式如何实现，收集依赖的过程和原理
-  > 数据监听 + 发布订阅模式  
-  > 依赖收集  
-  > 数据初始化，被 Object.defineProperty()设置 getter 和 setter 函数，被响应式的属性都有 Dep 对象  
-  > 组件在挂载阶段，调用 mountComponent 方法会新建 Watcher 对象,每个组件对应一个 Watcher  
-  > Watcher 在构造函数中会触发组件的\_render()函数（\_render() 是由 Watcher 代替组件执行的），此函数会触发数据的 getter()方法，执行 dep.depend(),相当于执行了当前 Watcher 的 addDep()，在 addDep()中 Watcher 保存了该 dep 对象，而且执行了 dep 的 addsub()订阅方法  
-  > 派发更新  
-  > 修改 data 的响应式属性会触发该属性的 setter 方法，在 setter 中触发 dep.notify(),依次调用依赖该属性的 Vue 组件的更新函数
+  > **数据监听 + 发布订阅模式**  
+  > 1.依赖收集 2.数据初始化，被 Object.defineProperty()设置 getter 和 setter 函数，被响应式的属性都有 Dep 对象 3.组件在挂载阶段，调用 mountComponent 方法会新建 Watcher 对象,每个组件对应一个 Watcher
+  > 4.Watcher 在构造函数中会触发组件的\_render()函数（\_render() 是由 Watcher 代替组件执行的），此函数会触发数据的 getter()方法，执行 dep.depend(),相当于执行了当前 Watcher 的 addDep()，在 addDep()中 Watcher 保存了该 dep 对象，而且执行了 dep 的 addsub()订阅方法 5.派发更新 6.修改 data 的响应式属性会触发该属性的 setter 方法，在 setter 中触发 dep.notify(),依次调用依赖该属性的 Vue 组件的更新函数
 - 如何解除双向绑定
   > 数据深拷贝
 - v-model 的原理，Vue 实例是怎么拿到 data 属性的
@@ -239,18 +239,17 @@ Summary of interview experience
 - composition API
 - 什么是虚拟 DOM，批量更新了解么
 - diff 算法，Vue 和 react 的 diff 算法的区别
-  > 数据改变时，setter 方法通知 Watcher，调用 patch 给真实的 DOM 打补丁  
-  > patch 会先判断 sameNode，值得比较就执行 patchVnode  
-  > patchVnode 只比较同层级的节点，执行 updateChildren 函数比较子节点  
-  > updateChildren 取出新旧 Vdom 的子节点取出，分别有头尾两个指针 oldStartIdx、newStartIdx、oldEndIdx、newEndIdx，当 oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx 时，有四种比较情况，每次比较完后指针移动：
+  > 1.数据改变时，setter 方法通知 Watcher，调用 patch 给真实的 DOM 打补丁
+  > 2.patch 会先判断 sameNode，值得比较就执行 patchVnode
+  > 3.patchVnode 只比较同层级的节点，执行 updateChildren 函数比较子节点
+  > 4.updateChildren 取出新旧 Vdom 的子节点取出，分别有头尾两个指针 oldStartIdx、newStartIdx、oldEndIdx、newEndIdx，当 oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx 时，有四种比较情况，每次比较完后指针移动：
   >
   > - 旧头和新头 sameVnode，patchVnode
   > - 旧尾和新尾 sameVnode，patchVnode
   > - 旧头和新尾 sameVnode，dom 第一节点移到最后
   > - 旧尾和新头 sameVnode，dom 最后节点移到开头
   >
-  > 若未能匹配到以上规则，创建一张旧节点的 key 的 map 表，拿新节点的 key 去查找。如果没找到，新建元素节点，如果有的话，判断是否是 sameVnode，是的话 patchVnode 并 insertBefore ,否的话创建新元素  
-  > 旧节点循环先完的话，add 剩下的新节点，新节点先循环完的画，删除剩余的旧节点
+  >   5.若未能匹配到以上规则，创建一张旧节点的 key 的 map 表，拿新节点的 key 去查找。如果没找到，新建元素节点，如果有的话，判断是否是 sameVnode，是的话 patchVnode 并 insertBefore ,否的话创建新元素 6.旧节点循环先完的话，add 剩下的新节点，新节点先循环完的画，删除剩余的旧节点
 - 浏览器路由，hashchage 了解么
 - 组件通信
   > 父子组件：prop/$emit,$children/$parent(不推荐),refs,  
@@ -266,6 +265,10 @@ Summary of interview experience
 - Vuex 状态管理的理解，作用，原理
 - 如何让组件使用 Vuex 里的 status
   > mapState
+- Vue 生命周期
+  > 在 beforeCreat 和 created 之间进行数据观测，绑定数据响应式变化  
+  > 在 created 和 beforeMount 之间，先判断是否有 el(挂载节点)存在，否的话直到 vm.$mount(el)执行，然后判断是否存在 template 参数，存在的话编译为 render 函数，否的话将外部的 HTML 做为 template 编译成 render 函数  
+  > 在 beforeMount 和 mounted 之间，用 $el 替代 el(内存中编译好的模板内容替换页面内容)
 
 ### HTML
 
@@ -393,14 +396,11 @@ Summary of interview experience
   > 验证 referer 可以有效的防止 CSRF
 - 请求头常见字段
 - 三次握手
-  > 第一次，客户端向服务端发送 SYN 报文（SYN 标志位为 1），指明自己的 ISN（初始 seq = x），客户端处于 SYN_SEND 状态  
-  > 第二次，服务端收到后发送 SYN 报文，指定自己的 ISN（seq = y），同时将收到的 x+1 作为 ACK 确认发送给客户端，此时服务端处于 SYN_REVD 状态  
-  > 第三次，客户端将服务端的 y+1 作为 ACK 发送给服务端，收到后双方都处于 ESTABLISHED 状态
+  > 1. 客户端向服务端发送 SYN 报文（SYN 标志位为 1），指明自己的 ISN（初始 seq = x），客户端处于 SYN_SEND 状态
+  > 2. 服务端收到后发送 SYN 报文，指定自己的 ISN（seq = y），同时将收到的 x+1 作为 ACK 确认发送给客户端，此时服务端处于 SYN_REVD 状态
+  > 3. 客户端将服务端的 y+1 作为 ACK 发送给服务端，收到后双方都处于 ESTABLISHED 状态
 - 四次挥手
-  > 客户端发起关闭请求，发送 FIN 报文，指明 seq = x，处于 FIN_WAIT1 状态  
-  > 服务端收到后发送 ACK（ack = x+1），处于 CLOSE_WAIT 状态  
-  > 服务端发送完数据后，发送 FIN（seq = y）和 ACK（ack = x+1）,处于 LAST_ACK 状态  
-  > 客户端发送 ACK(seq = x+1，ack = y+1),进入 TIME_WAIT 状态，经过 2MSL（最长报文段寿命，默认为两分钟） 后，客户端 CLOSED，服务端收到后 CLOSED
+  > 1.客户端发起关闭请求，发送 FIN 报文，指明 seq = x，处于 FIN_WAIT1 状态 2.服务端收到后发送 ACK（ack = x+1），处于 CLOSE_WAIT 状态 3.服务端发送完数据后，发送 FIN（seq = y）和 ACK（ack = x+1）,处于 LAST_ACK 状态 4.客户端发送 ACK(seq = x+1，ack = y+1),进入 TIME_WAIT 状态，经过 2MSL（最长报文段寿命，默认为两分钟） 后，客户端 CLOSED，服务端收到后 CLOSED
 - DNS 解析过程
   > 浏览器缓存 -> host 文件 >- 路由器缓存 -> LDNS(本地域名解析服务系统)  
   > LDNS 代替主机依次向根域名服务器，顶级域名服务器，次级域名服务器发起递归查询
@@ -421,14 +421,10 @@ Summary of interview experience
   > 可以使用 TCP 的关闭方法或者任意一点发送指定控制序号的数据的帧，另一方接收到后关闭连接
 - https
 
-  > - CA 证书签发
-  >   服务方向第三方机构 CA 提交公钥，组织信息等信息申请认证
-  >   CA 验证后向申请者签发认证文件-证书,证书包括：申请者公钥，申请者信息，CA 机构信息，有效时间，证书序列号等明文信息， 一个签名。签名的产生算法： 首先用散列函数计算公开的明文摘要，然后用 CA 的私钥对信息摘要加密  
-  >    客户端向服务端发送请求，服务端返回证书文件  
-  >    客户端读取证书明文信息，采用相同的散列函数得到摘要，利用内置的 CA 公钥解密签名，如果一致，则证书，公钥合法  
-  >   客户端验证证书相关域名信息，有效时间等  
-  >   客户端内置信任 CA 的根证书,包含 CA 的私钥
-  > - TLS 加密流程
+  > - **CA 证书签发**  
+  >   1.服务方向第三方机构 CA 提交公钥，组织信息等信息申请认证
+  >   2.CA 验证后向申请者签发认证文件-证书,证书包括：申请者公钥，申请者信息，CA 机构信息，有效时间，证书序列号等明文信息， 一个签名。签名的产生算法：首先用散列函数计算公开的明文摘要，然后用 CA 的私钥对信息摘要加密 3.客户端向服务端发送请求，服务端返回证书文件 4.客户端读取证书明文信息，采用相同的散列函数得到摘要，利用内置的 CA 公钥解密签名，如果一致，则证书，公钥合法 5.客户端验证证书相关域名信息，有效时间等 6.客户端内置信任 CA 的根证书,包含 CA 的私钥
+  > - **TLS 加密流程**
   >   客户端发起请求，服务端返回证书（包括服务端公钥）  
   >   客户端验证证书有效性，如果有效，则生成一个随机值，用证书的公钥对其加密
   >   客服端向服务端传送加密信息  
@@ -437,6 +433,8 @@ Summary of interview experience
 
 - 服务端推送
 - 服务端拿什么与客户端进行通信
+
+---
 
 ### Code
 
@@ -503,6 +501,8 @@ Summary of interview experience
 > })()
 > ```
 
+- 字符串去除首尾空格
+  > str = str.replace(/^\s*|\s*$/g, '')
 - 页面所有节点数
 - jsonp
 - 深拷贝
@@ -571,24 +571,50 @@ Summary of interview experience
 
   ```javascript
   class EventEmit {
-    constructor(elem, props) {
-      // your code
-    }
+    constructor(elem, props) {}
     // 注册事件的回调函数
-    on(event, callback) {
-      // your code
-    }
+    on(event, callback) {}
     // 注册事件的回调函数，只执行一次
-    once(event, callback) {
-      // your code
-    }
+    once(event, callback) {}
     // 触发注册的事件回调函数执行
-    emit(event, ...args) {
-      // your code
-    }
+    emit(event, ...args) {}
     // 删除一个回调函数
-    remove(event, callback) {
-      // your code
+    remove(event, callback) {}
+  }
+  class EventEmit {
+    constructor() {
+      this.events = new Map()
+    }
+    addEvent(key, fn, isOnce, ...args) {
+      const value =
+        this.events.get(key) || this.events.set(key, new Map()).get(key)
+      value.set(fn, (...args1) => {
+        fn(...args, ...args1)
+        isOnce && this.off(key, fn)
+      })
+    }
+    on(key, fn, ...args) {
+      if (!fn) {
+        return console.error('没有回调函数')
+      }
+      this.addEvent(key, fn, false, ...args)
+    }
+    once(key, fn, ...args) {
+      this.addEvent(key, fn, true, ...args)
+    }
+    off(key, fn) {
+      if (this.events.get(key)) {
+        this.events.get(key).delete(fn)
+      }
+    }
+    emit(key, ...args) {
+      if (!this.events.get(key)) {
+        console.warn('没有该事件')
+        return
+      }
+      for (let cb of this.events.get(key).values()) {
+        cb(...args)
+      }
     }
   }
   ```
@@ -629,6 +655,8 @@ Summary of interview experience
   }
   ```
 
+---
+
 ### 性能优化，前端工程化
 
 - 异步加载路由时，webpack chunk 的加载顺序怎么保证正确
@@ -645,6 +673,8 @@ Summary of interview experience
 - Webpack 代码切割
 - loader 与 plugin，plugin 遵循的事件流机制
 
+---
+
 ### 智力
 
 - 老虎吃羊问题
@@ -655,6 +685,8 @@ Summary of interview experience
 - 一共有 25 枚硬币，有十枚正面朝上，你可以翻转硬币，但是不能用手感知到硬币是否正面朝上。现在闭着眼睛将硬币分成两堆，问如何操作才能让两堆硬币正面朝上的个数相同
   > 将硬币分为两堆，15 个和 10 个，将 10 个的全部翻面则正面朝上的一样多
 
+---
+
 ### 其他
 
 - TS 泛型
@@ -662,6 +694,9 @@ Summary of interview experience
 - 如何统计用户的浏览时长，要考虑到用户会切换页面，缩放页面等。多个点进行上报时，如何区分这些数据来自于同一个会话？
   > [https://yq.aliyun.com/articles/635301](https://yq.aliyun.com/articles/635301)
 - 统计 uv 与 pv
+  > **pv**(page view)页面浏览量，**uv**(unique vistor)独立用户数  
+  > pv 统计，检查 url 是否变化
+  > uv 统计，利用 X-Forwarded-For 首部，拿到用户 IP，或者统计设备 Ip
 - 设计通用输入搜索组件
 - 实现一个快照类并优化
 - 文件上传
