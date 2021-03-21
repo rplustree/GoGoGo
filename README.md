@@ -1,4 +1,4 @@
-# GoGoGo
+# gogogo
 
 Summary of interview experience
 
@@ -239,17 +239,17 @@ Summary of interview experience
 - composition API
 - 什么是虚拟 DOM，批量更新了解么
 - diff 算法，Vue 和 react 的 diff 算法的区别
-  > 1.数据改变时，setter 方法通知 Watcher，调用 patch 给真实的 DOM 打补丁
-  > 2.patch 会先判断 sameNode，值得比较就执行 patchVnode
-  > 3.patchVnode 只比较同层级的节点，执行 updateChildren 函数比较子节点
-  > 4.updateChildren 取出新旧 Vdom 的子节点取出，分别有头尾两个指针 oldStartIdx、newStartIdx、oldEndIdx、newEndIdx，当 oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx 时，有四种比较情况，每次比较完后指针移动：
+  > 1. 数据改变时，setter 方法通知 Watcher，调用 patch 给真实的 DOM 打补丁
+  > 2. patch 会先判断 sameNode，值得比较就执行 patchVnode
+  > 3. patchVnode 只比较同层级的节点，执行 updateChildren 函数比较子节点
+  > 4. updateChildren 取出新旧 Vdom 的子节点取出，分别有头尾两个指针 oldStartIdx、newStartIdx、oldEndIdx、newEndIdx，当 oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx 时，有四种比较情况，每次比较完后指针移动：
   >
-  > - 旧头和新头 sameVnode，patchVnode
-  > - 旧尾和新尾 sameVnode，patchVnode
-  > - 旧头和新尾 sameVnode，dom 第一节点移到最后
-  > - 旧尾和新头 sameVnode，dom 最后节点移到开头
+  >    - 旧头和新头 sameVnode，patchVnode
+  >    - 旧尾和新尾 sameVnode，patchVnode
+  >    - 旧头和新尾 sameVnode，dom 第一节点移到最后
+  >    - 旧尾和新头 sameVnode，dom 最后节点移到开头
   >
-  >   5.若未能匹配到以上规则，创建一张旧节点的 key 的 map 表，拿新节点的 key 去查找。如果没找到，新建元素节点，如果有的话，判断是否是 sameVnode，是的话 patchVnode 并 insertBefore ,否的话创建新元素 6.旧节点循环先完的话，add 剩下的新节点，新节点先循环完的画，删除剩余的旧节点
+  > 5. 若未能匹配到以上规则，创建一张旧节点的 key 的 map 表，拿新节点的 key 去查找。如果没找到，新建元素节点，如果有的话，判断是否是 sameVnode，是的话 patchVnode 并 insertBefore ,否的话创建新元素 6.旧节点循环先完的话，add 剩下的新节点，新节点先循环完的画，删除剩余的旧节点
 - 浏览器路由，hashchage 了解么
 - 组件通信
   > 父子组件：prop/$emit,$children/$parent(不推荐),refs,  
@@ -270,14 +270,19 @@ Summary of interview experience
   > 在 created 和 beforeMount 之间，先判断是否有 el(挂载节点)存在，否的话直到 vm.$mount(el)执行，然后判断是否存在 template 参数，存在的话编译为 render 函数，否的话将外部的 HTML 做为 template 编译成 render 函数  
   > 在 beforeMount 和 mounted 之间，用 $el 替代 el(内存中编译好的模板内容替换页面内容)
 
+---
+
 ### HTML
 
 - HTML5 特性
+  > - 语义化标签，eg.
 - script 标签中 async 和 defer 的区别
   > async 会异步加载执行 js，不按顺序执行。defer 会异步加载 js，等所有元素解析完成，在 DOMContentLoaded 事件触发之前完成。
 - src 和 href 区别
   > src 引入并替换当前标签，href 在当前文档和资源之间确立联系
 - 块元素、行内元素有哪些？区别
+
+---
 
 ### CSS
 
@@ -314,8 +319,8 @@ Summary of interview experience
 - 样式重叠怎么解决
 - 移动端和 pc 端布局方案
 - 盒模型 content-box 和 border-box
-  > 标准盒模型 width = content width,实际大小 = width + padding + margin
-  > 怪异盒模型 盒子实际大小 = width = content width + padding + margin
+  > 标准盒模型 width = content width,实际大小 = width + padding + border
+  > 怪异盒模型 盒子实际大小 = width = content width + padding + border
 - display:none/visibility: hidden/opacity:0 的区别
   > display:none 隐藏后不占据空间，引起重排重绘，不会被继承，无法触发绑定事件。  
   > visibility: hidden 和 opacity:0 占据空间，只会重绘，可被继承，opacity:0 邦定事件可以触发，可以用于 transition
@@ -325,6 +330,8 @@ Summary of interview experience
 - 伪类与伪元素差别
 - 响应布局
 - CSS 中哪些属性触发重绘？回流？
+
+---
 
 ### Net
 
@@ -421,15 +428,19 @@ Summary of interview experience
   > 可以使用 TCP 的关闭方法或者任意一点发送指定控制序号的数据的帧，另一方接收到后关闭连接
 - https
 
-  > - **CA 证书签发**  
-  >   1.服务方向第三方机构 CA 提交公钥，组织信息等信息申请认证
-  >   2.CA 验证后向申请者签发认证文件-证书,证书包括：申请者公钥，申请者信息，CA 机构信息，有效时间，证书序列号等明文信息， 一个签名。签名的产生算法：首先用散列函数计算公开的明文摘要，然后用 CA 的私钥对信息摘要加密 3.客户端向服务端发送请求，服务端返回证书文件 4.客户端读取证书明文信息，采用相同的散列函数得到摘要，利用内置的 CA 公钥解密签名，如果一致，则证书，公钥合法 5.客户端验证证书相关域名信息，有效时间等 6.客户端内置信任 CA 的根证书,包含 CA 的私钥
-  > - **TLS 加密流程**
-  >   客户端发起请求，服务端返回证书（包括服务端公钥）  
-  >   客户端验证证书有效性，如果有效，则生成一个随机值，用证书的公钥对其加密
-  >   客服端向服务端传送加密信息  
-  >   服务端用私钥解密后，用客户端传来的随机值（私钥）对内容进行对称加密  
-  >   客户端得到信息后用随机值解密
+  > #### CA 证书签发
+  >
+  > 1. 服务方向第三方机构 CA 提交公钥，组织信息等信息申请认证
+  > 2. CA 验证后向申请者签发认证文件-证书,证书包括：申请者公钥，申请者信息，CA 机构信息，有效时间，证书序列号等明文信息， 一个签名。签名的产生算法：首先用散列函数计算公开的明文摘要，然后用 CA 的私钥对信息摘要加密
+  > 3. 客户端向服务端发送请求，服务端返回证书文件 4.客户端读取证书明文信息，采用相同的散列函数得到摘要，利用内置的 CA 公钥解密签名，如果一致，则证书，公钥合法 5.客户端验证证书相关域名信息，有效时间等 6.客户端内置信任 CA 的根证书,包含 CA 的私钥
+  >
+  > #### 加密流程
+  >
+  > 1. 客户端发起请求，服务端返回证书（包括服务端公钥）
+  > 2. 客户端验证证书有效性，如果有效，则生成一个随机值，用证书的公钥对其加密
+  > 3. 客服端向服务端传送加密信息
+  > 4. 服务端用私钥解密后，用客户端传来的随机值（私钥）对内容进行对称加密
+  > 5. 客户端得到信息后用随机值解密
 
 - 服务端推送
 - 服务端拿什么与客户端进行通信
