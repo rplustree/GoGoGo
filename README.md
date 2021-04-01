@@ -221,9 +221,16 @@ Summary of interview experience
 ### FreamWork
 
 - VUE 响应式如何实现，收集依赖的过程和原理
-  > **数据监听 + 发布订阅模式**  
-  > 1.依赖收集 2.数据初始化，被 Object.defineProperty()设置 getter 和 setter 函数，被响应式的属性都有 Dep 对象 3.组件在挂载阶段，调用 mountComponent 方法会新建 Watcher 对象,每个组件对应一个 Watcher
-  > 4.Watcher 在构造函数中会触发组件的\_render()函数（\_render() 是由 Watcher 代替组件执行的），此函数会触发数据的 getter()方法，执行 dep.depend(),相当于执行了当前 Watcher 的 addDep()，在 addDep()中 Watcher 保存了该 dep 对象，而且执行了 dep 的 addsub()订阅方法 5.派发更新 6.修改 data 的响应式属性会触发该属性的 setter 方法，在 setter 中触发 dep.notify(),依次调用依赖该属性的 Vue 组件的更新函数
+
+  > **数据监听 + 发布订阅模式**
+  >
+  > 1. 依赖收集
+  > 2. 数据初始化，被 Object.defineProperty()设置 getter 和 setter 函数，被响应式的属性都有 Dep 对象
+  > 3. 组件在挂载阶段，调用 mountComponent 方法会新建 Watcher 对象,每个组件对应一个 Watcher
+  > 4. Watcher 在构造函数中会触发组件的\_render()函数（\_render() 是由 Watcher 代替组件执行的），此函数会触发数据的 getter()方法，执行 dep.depend(),相当于执行了当前 Watcher 的 addDep()，在 addDep()中 Watcher 保存了该 dep 对象，而且执行了 dep 的 addsub()订阅方法
+  > 5. 派发更新
+  > 6. 修改 data 的响应式属性会触发该属性的 setter 方法，在 setter 中触发 dep.notify(),依次调用依赖该属性的 Vue 组件的更新函数
+
 - 如何解除双向绑定
   > 数据深拷贝
 - v-model 的原理，Vue 实例是怎么拿到 data 属性的
@@ -251,6 +258,11 @@ Summary of interview experience
   >
   > 5. 若未能匹配到以上规则，创建一张旧节点的 key 的 map 表，拿新节点的 key 去查找。如果没找到，新建元素节点，如果有的话，判断是否是 sameVnode，是的话 patchVnode 并 insertBefore ,否的话创建新元素 6.旧节点循环先完的话，add 剩下的新节点，新节点先循环完的画，删除剩余的旧节点
 - 浏览器路由，hashchage 了解么
+  > hash 模式和 hisTory 模式
+  > hash
+  > location.hash，带#号，监听 haschange 事件
+  > hisitory ,不带#号，利用 historyAPI 的 pushState 和 replaceState 函数，前者添加历史记录，后者修改，都不触发跳转。popState 事件，history 对象发生变化触发,但因为没有 # 号，所以当用户刷新页面之类的操作时，浏览器还是会给服务器发送请求。为了避免出现这种情况，所以这个实现需要服务器的支持，需要把所有路由都重定向到根页面
+- 路由懒加载原理
 - 组件通信
   > 父子组件：prop/$emit,$children/$parent(不推荐),refs,  
   > 隔代组件：provide/inject,$attrs/$listeners  
@@ -344,7 +356,7 @@ Summary of interview experience
   > 前者是幂等请求
 - HTTP 请求的幂等概念的理解以及常见请求的幂等性
 - HTTP 头设置什么可以获取用户 IP
-  > X-Forwarded-For:client,proxy1,proxy2
+  > X-Forwarded-For: client,proxy1,proxy2
 - http 协议报文结构
   > 请求头：方法 url 版本  
   > 请求体  
@@ -394,9 +406,9 @@ Summary of interview experience
   > TCP 用于可靠传输应用，比如文件传输，UDP 适用于实时应用
 - option 预请求
 - 跨域的同时携带 cookie
-  > Access-Control-Allow-Credentials:true  
+  > 响应头 Access-Control-Allow-Credentials:true  
   > Access-Control-Allow-Origin 为单一域名  
-  > 请求属性 withCredentials = true
+  > xhr 设置 withCredentials = true
 - 知道 referer 头部吗，直接请求服务器时 referer 是多少，在 CSRF 中的作用
   > 引荐网站的地址，在点击网页的链接，发送表单，加载静态资源会发送 referer 字段，直接输入网址或者点击书签不会发送。  
   > 使用 rel="noreferrer"不会发送该字段，或者设置 Referrer Policy 首部  
@@ -418,9 +430,22 @@ Summary of interview experience
   > session-cookie  
   > token  
   > OAuth
-- token 作用，缺陷在哪（JWT）
-  > 前端鉴权  
-  > 默认的 token 不加密，延长 token 需要前端替换旧 token
+- token 生成，验证过程，缺陷在哪（JWT）
+
+#### token 验证
+
+> 1. 客户端通过用户名和密码登陆
+> 2. 服务端验证并返回一个带签名的 token 给客户端
+> 3. 客户端存储 token，每次请求 API 都携带 Token
+> 4. 服务端验证 token 签名，返回响应
+
+#### jwt 生成
+
+> 1. header: 声明类型（jwt）和加密算法（HMAC SHA256），base64 加密
+> 2. payload: 标准中注册的声明，公共的声明， 私密的声明，base64 加密
+> 3. signature: base64 后的 header 和 payload 以及 secret 私钥
+>    默认的 token 不加密，延长 token 需要前端替换旧 token
+
 - HTTP 和 Websocket 的联系
 - websocket 过程，websocket 丢包怎么解决
   > 握手：客户端握手请求，服务端拼接 Sec-WebSocket-Key 和全局唯一标识 258EAFA5-E914-47DA-95CA-C5AB0DC85B11，然后经过 SHA-1 hash 编码和 base64 编码作为服务端的握手返回  
@@ -442,6 +467,8 @@ Summary of interview experience
   > 4. 服务端用私钥解密后，用客户端传来的随机值（私钥）对内容进行对称加密
   > 5. 客户端得到信息后用随机值解密
 
+- 长连接 keep-alive
+  >
 - 服务端推送
 - 服务端拿什么与客户端进行通信
 
@@ -676,10 +703,16 @@ Summary of interview experience
 - eslint 的工作原理，怎么写一个 eslint rule
 - Babel 原理，编译过程
   > 解析，将代码转换成 AST  
-  > 转换，访问 AST 的系欸但进行变换操作产生新的 AST  
+  > 转换，访问 AST 进行变换操作产生新的 AST  
   > 生成，用新 AST 为基础生成新代码
 - tree-shaking，为什么编译目标得是 ES6（ESM 静态优化机制）
 - Webpack 性能优化
+  > - purgecss-webpack-plugin 和 glob 去除无用样式
+  > - 引入 CDN,webpack 配置 externals，不会打包 CDN,html-webpack-externals-plugin 可以直接在 webpack 引入 CDN
+  > - tree-shaking，在 package.json 配置 sideEffects 属性，赋值 \["./src/\*_/_.css"],忽略 css 文件
+  > - 抽取公共代码 optimization 里的 splitChunks
+  > - HMR 热更新，配置 devServer
+  > - happypack 多核打包
 - Webpack 构建流程
 - Webpack 代码切割
 - loader 与 plugin，plugin 遵循的事件流机制
